@@ -1,24 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  ExampleTinyFrontendType,
+  loadExampleTinyFrontendClient,
+} from "@tiny-frontend/example-tiny-frontend-contract";
+import {
+  SecondComponentType,
+  loadExampleTinyFrontendClient as loadSecondComponent,
+} from "@tiny-frontend/second-component-contract";
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
+  const [ExampleTinyFrontend, setExampleTinyFrontend] =
+    useState<ExampleTinyFrontendType>();
+
+  const [SecondComponent, setSecondComponent] = useState<SecondComponentType>();
+
+  const [counter, setCounter] = useState(0);
+  const [secondCounter, setSecondCounter] = useState(0);
+
+  const loadTinyFrontend = async () => {
+    const ExampleTinyFrontend = await loadExampleTinyFrontendClient(
+      "https://tiny-frontent-api-cloudlare-example.stefko-tsonyovski.workers.dev/api"
+    );
+
+    const SecondComponent = await loadSecondComponent(
+      "https://tiny-frontent-api-cloudlare-example.stefko-tsonyovski.workers.dev/api"
+    );
+
+    setExampleTinyFrontend(() => ExampleTinyFrontend);
+    setSecondComponent(() => SecondComponent);
+  };
+
+  useEffect(() => {
+    loadTinyFrontend();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {ExampleTinyFrontend ? (
+        <ExampleTinyFrontend name="First" onCounterChange={setCounter} />
+      ) : (
+        <strong>Loading...</strong>
+      )}
+      <p>
+        You have pressed the button inside the first component{" "}
+        <strong>{counter} times</strong>.
+      </p>
+      {SecondComponent ? (
+        <SecondComponent
+          name="Second"
+          age={19}
+          onCounterChange={setSecondCounter}
+        />
+      ) : (
+        <strong>Loading...</strong>
+      )}
+      <p>
+        You have pressed the button inside the second component{" "}
+        <strong>{secondCounter} times</strong>.
+      </p>
     </div>
   );
 }

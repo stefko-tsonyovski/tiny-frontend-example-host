@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "packages": {
+    "@tiny-frontend/example-tiny-frontend-contract": {
+      "signature": "57278dc437084152caa1407e27afabc7",
+      "file": true
+    },
+    "@tiny-frontend/second-component-contract": {
+      "signature": "d477a8eecffa9b228fac63706a50796b",
+      "file": true
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "@tiny-frontend/second-component-contract",
+  "tinyFrontendName": "SecondComponent",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "preview": "vite preview"
+  },
+  "types": "./dist/contract/src/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/second-component-contract.umd.js",
+  "module": "./dist/second-component-contract.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/second-component-contract.es.js",
+      "require": "./dist/second-component-contract.umd.js"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:@cazoo/eslint/react"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off"
+    }
+  },
+  "dependencies": {
+    "@tiny-frontend/client": "^0.0.9"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  },
+  "yalcSig": "d477a8eecffa9b228fac63706a50796b"
+}
